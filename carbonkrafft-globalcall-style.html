@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CarbonKrafft — Sovereign Infrastructure for Environmental Governance</title>
+<meta name="description" content="CarbonKrafft is AI-powered emissions verification infrastructure helping Indian MSMEs navigate EU-CBAM compliance and unlock green finance.">
+<meta name="theme-color" content="#f4f5f7">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brand-blue:#37abfa;
+    --brand-blue-deep:#1f7fc4;
+    --brand-pink:#ff460d;
+  }
+  html[data-theme="light"]{
+    --page-background:#f2f3f5;
+    --text-primary:#14171c;
+    --text-muted:#565c66;
+    --text-faint:#8b909a;
+    --glass-border:rgba(20,23,28,0.09);
+    --glass-panel-bg:rgba(255,255,255,0.62);
+    --glass-panel-strong-bg:rgba(255,255,255,0.86);
+    --glass-button-secondary-bg:rgba(20,23,28,0.045);
+    --glass-header-bg:rgba(255,255,255,0.55);
+    --shadow:0 20px 50px rgba(20,23,28,0.08);
+  }
+  html[data-theme="dark"]{
+    --page-background:#0c0e11;
+    --text-primary:#f3f4f6;
+    --text-muted:#a3a9b2;
+    --text-faint:#686e78;
+    --glass-border:rgba(255,255,255,0.09);
+    --glass-panel-bg:rgba(255,255,255,0.045);
+    --glass-panel-strong-bg:rgba(255,255,255,0.065);
+    --glass-button-secondary-bg:rgba(255,255,255,0.06);
+    --glass-header-bg:rgba(12,14,17,0.6);
+    --shadow:0 20px 50px rgba(0,0,0,0.4);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--page-background);
+    color:var(--text-primary);
+    font-family:'DM Sans',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    transition:background .3s ease, color .3s ease;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  ::selection{background:var(--brand-blue);color:#fff;}
+
+  .font-display{
+    font-family:'Bebas Neue',sans-serif;
+    letter-spacing:0.04em;
+    line-height:0.95;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  h1,h2,h3{margin:0;}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 20px;}
+
+  /* ---------- GLASS PRIMITIVES ---------- */
+  .glass-panel{
+    background:var(--glass-panel-bg);
+    border:1px solid var(--glass-border);
+    border-radius:1.4rem;
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+  }
+  .glass-panel-strong{
+    background:var(--glass-panel-strong-bg);
+    border:1px solid var(--glass-border);
+    border-radius:1.7rem;
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+    box-shadow:var(--shadow);
+  }
+  .glass-button-primary{
+    display:inline-flex;align-items:center;gap:8px;
+    background:linear-gradient(135deg,var(--brand-blue),var(--brand-blue-deep));
+    color:#fff;padding:11px 22px;border-radius:999px;
+    font-weight:600;font-size:0.92rem;border:none;cursor:pointer;
+    box-shadow:0 10px 26px rgba(55,171,250,0.32);
+    transition:transform .2s ease;
+  }
+  .glass-button-primary:hover{transform:translateY(-2px);}
+  .glass-button-secondary{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--glass-button-secondary-bg);
+    border:1px solid var(--glass-border);
+    color:var(--text-primary);
+    padding:11px 20px;border-radius:999px;
+    font-weight:600;font-size:0.88rem;
+    transition:all .2s ease;
+  }
+  .glass-button-secondary:hover{background:rgba(55,171,250,0.1);border-color:rgba(55,171,250,0.35);}
+  .glass-button-secondary svg{opacity:.75;}
+
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.7rem;letter-spacing:0.22em;text-transform:uppercase;
+    color:var(--text-faint);
+  }
+
+  /* ---------- HEADER ---------- */
+  header{position:sticky;top:0;z-index:100;padding:14px 16px 0;}
+  .site-header-shell{
+    max-width:1240px;margin:0 auto;
+    background:var(--glass-header-bg);
+    border:1px solid var(--glass-border);
+    border-radius:1.6rem;
+    backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    padding:12px 16px;
+  }
+  .header-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;}
+  .brand{display:flex;align-items:center;gap:12px;min-width:0;}
+  .brand-mark{
+    width:52px;height:52px;border-radius:1rem;flex-shrink:0;
+    background:var(--glass-button-secondary-bg);
+    border:1px solid var(--glass-border);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.05em;
+    color:var(--brand-blue);
+  }
+  .brand-copy p{margin:0;}
+  .brand-copy .eyebrow{font-size:0.62rem;letter-spacing:0.18em;}
+  .brand-copy .name{
+    font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.04em;
+    text-transform:uppercase;color:var(--text-primary);
+  }
+  @media (max-width:640px){.brand-copy{display:none;}}
+
+  .header-controls{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+  .theme-switch{display:flex;align-items:center;gap:8px;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-faint);}
+  .theme-switch input{display:none;}
+  .theme-track{
+    width:38px;height:20px;border-radius:999px;
+    background:var(--glass-button-secondary-bg);border:1px solid var(--glass-border);
+    position:relative;cursor:pointer;transition:background .2s;
+  }
+  .theme-thumb{
+    position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;
+    background:var(--brand-blue);transition:transform .25s ease;
+  }
+  html[data-theme="dark"] .theme-thumb{transform:translateX(18px);}
+  .lang-button{
+    display:flex;align-items:center;gap:6px;
+    background:var(--glass-button-secondary-bg);border:1px solid var(--glass-border);
+    padding:9px 14px;border-radius:999px;font-size:0.82rem;font-weight:600;cursor:pointer;
+    color:var(--text-primary);
+  }
+  .nav-toggle{display:none;background:none;border:1px solid var(--glass-border);border-radius:10px;padding:8px 10px;color:var(--text-primary);cursor:pointer;}
+
+  nav.primary-nav{margin-top:10px;overflow-x:auto;}
+  .nav-track{display:flex;gap:8px;}
+  .nav-pill{
+    display:flex;align-items:center;gap:7px;white-space:nowrap;
+    background:var(--glass-button-secondary-bg);border:1px solid transparent;
+    padding:10px 16px;border-radius:999px;font-size:0.86rem;font-weight:500;
+    color:var(--text-muted);transition:all .2s ease;
+  }
+  .nav-pill:hover{color:var(--text-primary);background:rgba(55,171,250,0.1);}
+  .nav-pill svg{width:14px;height:14px;opacity:0.7;}
+  .nav-pill.highlight{
+    background:linear-gradient(135deg, rgba(255,70,13,0.22), rgba(255,255,255,0.06));
+    color:var(--text-primary);border-color:rgba(255,70,13,0.3);
+  }
+  @media (max-width:900px){
+    nav.primary-nav{display:none;}
+    .nav-toggle{display:block;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero-section{padding:28px 20px 40px;}
+  .hero-panel{max-width:1240px;margin:0 auto;padding:40px 32px;position:relative;overflow:hidden;}
+  .hero-panel::before{
+    content:'';position:absolute;inset:0;z-index:0;
+    background:radial-gradient(circle at 15% 10%, rgba(55,171,250,0.14), transparent 34%),
+               radial-gradient(circle at 85% 25%, rgba(255,70,13,0.09), transparent 28%);
+  }
+  .hero-content{position:relative;z-index:1;}
+  .hero-content h1{
+    margin-top:14px;
+    font-size:clamp(2.6rem,7.5vw,5rem);
+    text-transform:uppercase;
+    color:var(--text-primary);
+  }
+  .hero-content h1 .dim{color:var(--text-muted);}
+  .hero-content p.lede{
+    margin-top:16px;max-width:680px;font-size:1.05rem;color:var(--text-muted);
+  }
+  .hero-ctas{margin-top:26px;display:flex;flex-wrap:wrap;gap:12px;}
+  .hero-stats{
+    margin-top:34px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+  }
+  @media (max-width:820px){.hero-stats{grid-template-columns:1fr;}}
+  .hero-stat{padding:20px;}
+  .hero-stat .label{font-size:0.68rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-faint);font-family:'IBM Plex Mono',monospace;}
+  .hero-stat .value{font-family:'Bebas Neue',sans-serif;font-size:2.1rem;letter-spacing:0.03em;margin-top:8px;color:var(--text-primary);}
+  .hero-stat .detail{margin-top:8px;font-size:0.86rem;color:var(--text-muted);}
+
+  /* ---------- GENERIC SECTION ---------- */
+  section{padding:56px 20px;}
+  .section-inner{max-width:1240px;margin:0 auto;}
+  .section-title{
+    margin-top:10px;font-size:clamp(1.9rem,4.4vw,2.8rem);
+    text-transform:uppercase;color:var(--text-primary);
+  }
+  .section-lede{margin-top:14px;max-width:720px;font-size:0.98rem;color:var(--text-muted);}
+
+  .grid-2{display:grid;gap:16px;grid-template-columns:repeat(2,1fr);margin-top:26px;}
+  .grid-3{display:grid;gap:16px;grid-template-columns:repeat(3,1fr);margin-top:26px;}
+  .grid-4{display:grid;gap:16px;grid-template-columns:repeat(4,1fr);margin-top:26px;}
+  @media (max-width:900px){.grid-3,.grid-4{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:600px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}}
+
+  .card{padding:22px;}
+  .card h3{font-size:1.05rem;font-weight:700;color:var(--text-primary);font-family:'DM Sans',sans-serif;}
+  .card p{margin-top:10px;font-size:0.9rem;color:var(--text-muted);}
+  .card .accent-title{
+    font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:0.03em;
+    color:var(--brand-blue);text-transform:uppercase;
+  }
+  .card .index{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--text-faint);}
+
+  .stat-card{padding:22px;text-align:center;}
+  .stat-card .label{font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-faint);font-family:'IBM Plex Mono',monospace;}
+  .stat-card .value{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;margin-top:8px;color:var(--text-primary);}
+  .stat-card .detail{margin-top:8px;font-size:0.85rem;color:var(--text-muted);}
+
+  /* ---------- ORACLE DEMO ---------- */
+  .oracle-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px;}
+  @media (max-width:980px){.oracle-cols{grid-template-columns:1fr;}}
+  .oracle-panel{padding:24px;display:flex;flex-direction:column;}
+  .oracle-tag{font-family:'IBM Plex Mono',monospace;font-size:0.66rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--brand-blue);}
+  .oracle-panel h4{margin-top:10px;font-size:1.1rem;color:var(--text-primary);font-family:'DM Sans',sans-serif;font-weight:700;}
+  .upload-box{
+    margin-top:16px;border:1.5px dashed var(--glass-border);border-radius:1rem;
+    padding:20px;text-align:center;font-size:0.84rem;color:var(--text-muted);cursor:pointer;
+    transition:all .2s ease;
+  }
+  .upload-box:hover{border-color:var(--brand-blue);background:rgba(55,171,250,0.06);}
+  .ocr-log{
+    margin-top:16px;background:var(--glass-button-secondary-bg);border:1px solid var(--glass-border);
+    border-radius:0.9rem;padding:14px;font-family:'IBM Plex Mono',monospace;font-size:0.76rem;
+    color:var(--text-muted);min-height:120px;line-height:1.75;
+  }
+  .map-visual{
+    margin-top:16px;position:relative;border-radius:1rem;overflow:hidden;aspect-ratio:16/11;
+    background:radial-gradient(circle at 30% 30%, rgba(55,171,250,0.22), transparent 55%),
+      linear-gradient(160deg,#274a63 0%,#16283a 60%,#0e1a26 100%);
+    border:1px solid var(--glass-border);
+  }
+  .map-visual .rooftop{
+    position:absolute;top:32%;left:24%;width:52%;height:36%;
+    background:repeating-linear-gradient(45deg, rgba(255,255,255,0.28) 0 6px, rgba(255,255,255,0.08) 6px 12px);
+    border-radius:6px;border:1px solid rgba(255,255,255,0.25);
+  }
+  .map-visual .pulse{
+    position:absolute;width:10px;height:10px;border-radius:50%;background:var(--brand-blue);
+    top:44%;left:47%;box-shadow:0 0 0 0 rgba(55,171,250,0.6);animation:pulse 2s infinite;
+  }
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(55,171,250,0.5);}70%{box-shadow:0 0 0 16px rgba(55,171,250,0);}100%{box-shadow:0 0 0 0 rgba(55,171,250,0);}}
+  .map-tags{margin-top:14px;display:flex;flex-direction:column;gap:8px;}
+  .map-tag{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:var(--text-muted);display:flex;align-items:center;gap:8px;}
+  .map-tag::before{content:'●';color:var(--brand-blue);font-size:0.55rem;}
+  .score-dial{margin-top:16px;text-align:center;padding:22px 0 10px;border:1px solid var(--glass-border);border-radius:1rem;background:var(--glass-button-secondary-bg);}
+  .score-dial .score-num{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--brand-blue);}
+  .score-dial .score-tag{font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-faint);font-family:'IBM Plex Mono',monospace;}
+  .reveal-btn{
+    margin-top:16px;width:100%;text-align:center;
+    background:linear-gradient(135deg,var(--brand-blue),var(--brand-blue-deep));
+    color:#fff;font-weight:700;font-size:0.86rem;padding:13px;border-radius:999px;border:none;cursor:pointer;
+    opacity:0;transform:translateY(6px);transition:all .5s ease;
+  }
+  .reveal-btn.show{opacity:1;transform:translateY(0);}
+  .cert-row{margin-top:14px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--glass-border);padding-top:14px;font-size:0.78rem;color:var(--text-muted);}
+  .cert-row a{color:var(--brand-blue);font-family:'IBM Plex Mono',monospace;font-size:0.72rem;}
+
+  /* ---------- AGENT SQUAD TABS ---------- */
+  .squad-tabs{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap;}
+  .squad-tab{
+    font-size:0.84rem;font-weight:600;padding:10px 18px;border-radius:999px;
+    background:var(--glass-button-secondary-bg);border:1px solid var(--glass-border);
+    color:var(--text-muted);cursor:pointer;transition:all .2s ease;
+  }
+  .squad-tab.active{background:var(--brand-blue);color:#fff;border-color:transparent;}
+  .squad-dept{display:none;margin-top:20px;}
+  .squad-dept.active{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+  @media (max-width:980px){.squad-dept.active{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:560px){.squad-dept.active{grid-template-columns:1fr;}}
+  .agent-status{display:flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:0.64rem;color:var(--brand-blue);text-transform:uppercase;letter-spacing:0.06em;}
+  .agent-status::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--brand-blue);box-shadow:0 0 0 3px rgba(55,171,250,0.2);}
+
+  /* ---------- SENTINEL ---------- */
+  .sentinel-panel{margin-top:26px;padding:0;overflow:hidden;}
+  .sentinel-head{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--glass-border);}
+  .sentinel-head .title{display:flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:0.84rem;}
+  .live-dot{width:8px;height:8px;border-radius:50%;background:var(--brand-pink);animation:blink 1.6s infinite;}
+  @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.25;}}
+  .sentinel-body{padding:22px 24px;display:grid;grid-template-columns:1.1fr 0.9fr;gap:24px;}
+  @media (max-width:860px){.sentinel-body{grid-template-columns:1fr;}}
+  .feed-line{font-family:'IBM Plex Mono',monospace;font-size:0.78rem;padding:9px 0;border-bottom:1px solid var(--glass-border);color:var(--text-muted);display:flex;gap:10px;}
+  .feed-line .ts{color:var(--text-faint);white-space:nowrap;}
+  .alert-box{background:rgba(255,70,13,0.09);border:1px solid rgba(255,70,13,0.3);border-radius:0.9rem;padding:16px 18px;font-size:0.86rem;}
+  .alert-box .tag{font-family:'IBM Plex Mono',monospace;font-size:0.64rem;color:var(--brand-pink);letter-spacing:0.08em;text-transform:uppercase;}
+  .draft-window{margin-top:16px;background:var(--glass-button-secondary-bg);border:1px solid var(--glass-border);border-radius:0.9rem;padding:16px;font-size:0.8rem;color:var(--text-muted);font-family:'IBM Plex Mono',monospace;line-height:1.7;}
+
+  /* ---------- COLLABORATORS ---------- */
+  .collab-avatar{
+    width:48px;height:48px;border-radius:50%;
+    background:linear-gradient(135deg,var(--brand-blue),var(--brand-blue-deep));
+    color:#fff;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:0.95rem;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .collab-role{font-size:0.76rem;color:var(--brand-blue);font-family:'IBM Plex Mono',monospace;margin-top:6px;}
+
+  /* ---------- COMPLIANCE CHIPS ---------- */
+  .chip-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px;}
+  .chip{font-family:'IBM Plex Mono',monospace;font-size:0.74rem;padding:9px 16px;border-radius:999px;color:var(--text-muted);}
+
+  /* ---------- ETHICS ---------- */
+  .ethics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px;}
+  @media (max-width:900px){.ethics-grid{grid-template-columns:1fr;}}
+
+  /* ---------- JOIN / FOOTER CTA ---------- */
+  .join-panel{padding:36px 32px;}
+  .join-panel h2{margin-top:8px;font-size:clamp(1.9rem,4.4vw,2.6rem);text-transform:uppercase;}
+  .join-panel p{margin-top:12px;max-width:640px;color:var(--text-muted);}
+  .join-ctas{margin-top:20px;display:flex;gap:12px;flex-wrap:wrap;}
+
+  footer{padding:16px 16px 28px;}
+  .footer-shell{max-width:1240px;margin:0 auto;padding:32px;}
+  .footer-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:28px;align-items:end;}
+  @media (max-width:900px){.footer-grid{grid-template-columns:1fr;}}
+  .footer-shell h2{font-size:clamp(1.8rem,4vw,2.6rem);text-transform:uppercase;margin-top:14px;}
+  .footer-shell p{margin-top:12px;font-size:0.95rem;color:var(--text-muted);max-width:520px;}
+  .footer-cta-buttons{display:grid;gap:10px;grid-template-columns:repeat(2,1fr);}
+  @media (max-width:500px){.footer-cta-buttons{grid-template-columns:1fr;}}
+  .footer-cta-buttons a{justify-content:center;}
+  .footer-bottom{
+    margin-top:32px;padding-top:18px;border-top:1px solid var(--glass-border);
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-faint);
+  }
+  .dot{width:5px;height:5px;border-radius:50%;background:var(--brand-pink);}
+
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="site-header-shell">
+    <div class="header-toolbar">
+      <a class="brand" href="#top">
+        <span class="brand-mark">CK</span>
+        <span class="brand-copy">
+          <p class="eyebrow">CarbonKrafft</p>
+          <p class="name">Emissions Verification OS</p>
+        </span>
+      </a>
+      <div class="header-controls">
+        <label class="theme-switch">
+          <span>Light</span>
+          <span class="theme-track" id="themeTrack"><span class="theme-thumb"></span></span>
+          <span>Dark</span>
+        </label>
+        <button class="lang-button" type="button">English <span>▾</span></button>
+        <button class="nav-toggle" type="button" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+    <nav class="primary-nav">
+      <div class="nav-track">
+        <a class="nav-pill" href="#platform"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/></svg>Platform</a>
+        <a class="nav-pill" href="#oracle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>Oracle Demo</a>
+        <a class="nav-pill" href="#agents"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/></svg>Agent Squad</a>
+        <a class="nav-pill" href="#collaborators"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/></svg>Collaborators</a>
+        <a class="nav-pill" href="#partnership"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>Partnership</a>
+        <a class="nav-pill" href="#careers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/></svg>Careers</a>
+        <a class="nav-pill highlight" href="#project"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>Project Brief</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero-section" id="top">
+  <div class="hero-panel glass-panel-strong">
+    <div class="hero-content reveal in">
+      <p class="eyebrow">Sovereign Digital Public Infrastructure</p>
+      <h1 class="font-display">The infrastructure<br><span class="dim">for a sovereign green economy.</span></h1>
+      <p class="lede">CarbonKrafft is AI-powered emissions verification for Indian MSMEs — turning ground-truth utility data and satellite record into one verifiable national signal built to survive contact with EU-CBAM.</p>
+      <div class="hero-ctas">
+        <a href="#oracle" class="glass-button-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          See the One-Scan Oracle
+        </a>
+        <a href="#platform" class="glass-button-secondary">Explore the platform</a>
+        <a href="#project" class="glass-button-secondary">Read the project brief</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat glass-panel"><p class="label">Market exposure</p><p class="value">69M</p><p class="detail">Indian MSMEs operating without a verified emissions record.</p></div>
+        <div class="hero-stat glass-panel"><p class="label">Compliance pressure</p><p class="value">45%</p><p class="detail">Of India's exports now exposed to live EU-CBAM mandates.</p></div>
+        <div class="hero-stat glass-panel"><p class="label">Operational flow</p><p class="value">Ground → Sky → Credit</p><p class="detail">Ground truth and satellite record confirmed before a credit unlocks.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE PROBLEM ============ -->
+<section id="problem">
+  <div class="section-inner">
+    <p class="eyebrow">The problem</p>
+    <h2 class="section-title font-display">Green ambition is abundant. Verification is not.</h2>
+    <p class="section-lede">Identity has Aadhaar. Payments have UPI. Emissions have a stack of paper utility bills and a buyer in Brussels who doesn't trust any of it.</p>
+    <div class="grid-2">
+      <div class="card glass-panel">
+        <h3>MSMEs locked out of green finance</h3>
+        <p>Without a verifiable emissions record, small manufacturers can't access concessional green credit — even when their actual footprint qualifies.</p>
+      </div>
+      <div class="card glass-panel">
+        <h3>Compliance in a language no one on the floor speaks</h3>
+        <p>EU-CBAM reporting formats assume a sustainability team that a 40-person export unit simply doesn't have.</p>
+      </div>
+      <div class="card glass-panel">
+        <h3>Satellite data and shop-floor data never meet</h3>
+        <p>Geospatial verification exists. Utility records exist. Almost nothing cross-checks them against each other automatically.</p>
+      </div>
+      <div class="card glass-panel">
+        <h3>Regulation moves faster than paperwork</h3>
+        <p>By the time a compliance filing is finalized, the underlying formula has often already changed upstream in Brussels.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE PLATFORM ============ -->
+<section id="platform">
+  <div class="section-inner">
+    <p class="eyebrow">The platform</p>
+    <h2 class="section-title font-display">One verification layer. Three sovereign rails.</h2>
+    <p class="section-lede">CarbonKrafft isn't another dashboard. It's infrastructure: a data layer, a compute layer, and an interoperability layer designed to move together.</p>
+    <div class="grid-3">
+      <div class="card glass-panel">
+        <p class="accent-title">Liquidity</p>
+        <p style="margin-top:10px;color:var(--text-muted);font-size:0.9rem;">Consent-based utility data flow — an MSME's records move once, verifiably, instead of being re-keyed for every auditor.</p>
+      </div>
+      <div class="card glass-panel">
+        <p class="accent-title">Sovereignty</p>
+        <p style="margin-top:10px;color:var(--text-muted);font-size:0.9rem;">Bhashini NLP reads the paperwork in its native language; ISRO and Sentinel geospatial assets confirm it from orbit.</p>
+      </div>
+      <div class="card glass-panel">
+        <p class="accent-title">Interoperability</p>
+        <p style="margin-top:10px;color:var(--text-muted);font-size:0.9rem;">Plugs directly into National Project Management Agency dashboards — a result should be usable the moment it's produced.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ONE-SCAN ORACLE ============ -->
+<section id="oracle">
+  <div class="section-inner">
+    <p class="eyebrow">Live demo</p>
+    <h2 class="section-title font-display">The One-Scan Oracle</h2>
+    <p class="section-lede">One upload, two independent witnesses. Ground-truth paperwork and satellite record are cross-checked before a single credit is unlocked.</p>
+    <div class="oracle-cols">
+      <div class="oracle-panel glass-panel">
+        <p class="oracle-tag">Ground Truth Layer</p>
+        <h4>Upload the utility bill</h4>
+        <div class="upload-box" id="uploadBox">📄 Drop a meter bill, or click to simulate a scan</div>
+        <div class="ocr-log" id="ocrLog"><span style="opacity:.5;">Awaiting document…</span></div>
+      </div>
+      <div class="oracle-panel glass-panel">
+        <p class="oracle-tag">Sky Interface Layer</p>
+        <h4>Cross-check from orbit</h4>
+        <div class="map-visual"><div class="rooftop"></div><div class="pulse"></div></div>
+        <div class="map-tags">
+          <div class="map-tag">Sentinel-2 multi-spectral pass — confirmed</div>
+          <div class="map-tag">Thermal signature check — nominal</div>
+          <div class="map-tag">NDVI vegetation density index — tracked</div>
+        </div>
+      </div>
+      <div class="oracle-panel glass-panel">
+        <p class="oracle-tag">Economic Activation</p>
+        <h4>Eco-Trust Score</h4>
+        <div class="score-dial"><div class="score-num" id="scoreNum">—</div><div class="score-tag">0–100 scale</div></div>
+        <button class="reveal-btn" id="revealBtn">Apply for ₹50L Green Credit (CSIF Fund)</button>
+        <div class="cert-row"><span>CBAM-Aligned Certificate</span><a href="#" id="certLink">— pending scan —</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AGENT SQUAD ============ -->
+<section id="agents">
+  <div class="section-inner">
+    <p class="eyebrow">The squad of 15</p>
+    <h2 class="section-title font-display">An autonomous governance engine, watched in the open</h2>
+    <p class="section-lede">Every agent's uptime, output, and decision trail is visible — "trust the algorithm" isn't a compliance answer.</p>
+    <div class="squad-tabs">
+      <button class="squad-tab active" data-dept="technical">Technical &amp; Data</button>
+      <button class="squad-tab" data-dept="regulatory">Regulatory &amp; Impact</button>
+      <button class="squad-tab" data-dept="growth">Growth &amp; Communication</button>
+    </div>
+    <div class="squad-dept active" data-dept="technical">
+      <div class="card glass-panel"><div class="agent-status">Online</div><h3 style="margin-top:10px;">Sentinel Agent</h3><p>Watches sovereign DPI infrastructure health and uptime, 24/7.</p></div>
+      <div class="card glass-panel"><div class="agent-status">Online</div><h3 style="margin-top:10px;">Biomass Agent</h3><p>Reads land and agricultural data to catch what utility bills miss.</p></div>
+      <div class="card glass-panel"><div class="agent-status">Online</div><h3 style="margin-top:10px;">Anomalies Agent</h3><p>Flags pipeline carbon discrepancies before they reach an auditor.</p></div>
+      <div class="card glass-panel"><div class="agent-status">Online</div><h3 style="margin-top:10px;">Technical Auditor Agent</h3><p>Runs tamper-proof 'Proof of Green' code verification on every scan.</p></div>
+    </div>
+    <div class="squad-dept" data-dept="regulatory">
+      <div class="card glass-panel"><div class="agent-status">Online</div><h3 style="margin-top:10px;">Policy Crawler Agent</h3><p>Scans EU-CBAM and SEBI BRSR registries for changes daily.</p></div>
+      <div class="card glass-panel"><div class="agent-status">Online</div><h3 style="margin-top:10px;">Audit-Ready Agent</h3><p>Prepares third-party documentation automatically, ahead of request.</p></div>
+      <div class="card glass-panel"><div class="agent-status">Online</div><h3 style="margin-top:10px;">Regulatory Watch Agent</h3><p>Predicts upcoming compliance requirements before they're mandatory.</p></div>
+      <div class="card glass-panel"><div class="agent-status">Online</div><h3 style="margin-top:10px;">Grant Writer Agent</h3><p>Drafts technical applications for UN and multilateral funding.</p></div>
+    </div>
+    <div class="squad-dept" data-dept="growth">
+      <div class="card glass-panel"><div class="agent-status">Online</div><h3 style="margin-top:10px;">Scout Agent</h3><p>Surfaces new MSME clusters and partnership opportunities.</p></div>
+      <div class="card glass-panel"><div class="agent-status">Online</div><h3 style="margin-top:10px;">Storyteller Agent</h3><p>Turns verification data into plain-language impact narratives.</p></div>
+      <div class="card glass-panel"><div class="agent-status">Online</div><h3 style="margin-top:10px;">Workflow Orchestrator</h3><p>Sequences every other agent so nothing runs out of order.</p></div>
+      <div class="card glass-panel"><div class="agent-status">Online</div><h3 style="margin-top:10px;">Product Educator Agent</h3><p>Walks new MSMEs through their first scan, in their own language.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NETWORK STATS ============ -->
+<section id="network">
+  <div class="section-inner">
+    <p class="eyebrow">The network</p>
+    <h2 class="section-title font-display">One national verification graph</h2>
+    <p class="section-lede">Regional clusters, MSME onboarding partners, and compliance auditors form a living network — not a mailing list.</p>
+    <div class="grid-3">
+      <div class="stat-card glass-panel"><p class="label">MSMEs onboarded</p><p class="value">1,240+</p><p class="detail">Active on the verification pipeline</p></div>
+      <div class="stat-card glass-panel"><p class="label">Agents live</p><p class="value">15</p><p class="detail">Running the governance engine end to end</p></div>
+      <div class="stat-card glass-panel"><p class="label">Certificates issued</p><p class="value">380+</p><p class="detail">CBAM-aligned green certificates</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ECO-SENTINEL BOT ============ -->
+<section id="eco-sentinel">
+  <div class="section-inner">
+    <p class="eyebrow">Regulatory alignment engine</p>
+    <h2 class="section-title font-display">Eco-Sentinel Bot v1.0</h2>
+    <p class="section-lede">Policy doesn't wait for a quarterly review cycle. Neither does this.</p>
+    <div class="sentinel-panel glass-panel">
+      <div class="sentinel-head">
+        <div class="title"><span class="live-dot"></span> CIO Dashboard — Continuous Policy Ingestion</div>
+        <span class="mono" style="font-size:0.72rem;color:var(--text-faint);">Jul 26, 2026 · 9AM-5PM IST</span>
+      </div>
+      <div class="sentinel-body">
+        <div>
+          <div class="feed-line"><span class="ts">09:12</span> Ingested NITI Aayog quarterly emissions advisory</div>
+          <div class="feed-line"><span class="ts">10:47</span> Cross-referenced UNFCCC methodology update, no conflicts found</div>
+          <div class="feed-line"><span class="ts">11:30</span> EU-CBAM technical registry scan complete — 1 change detected</div>
+          <div class="feed-line"><span class="ts">11:31</span> dMRV backend logic pipeline queued for re-alignment</div>
+          <div class="feed-line"><span class="ts">14:05</span> Draft RFI response generated, awaiting review</div>
+        </div>
+        <div>
+          <div class="alert-box"><div class="tag">Active alert</div><p style="margin-top:8px;">An EU-CBAM Embedded Emissions Formula modification has been detected. The dMRV backend logic pipeline is being automatically updated.</p></div>
+          <div class="draft-window">
+            &gt; Draft: Response to UN Request for Information<br>
+            &gt; Subject: Embedded emissions methodology, MSME segment<br>
+            &gt; Status: ready to export<br>
+            &gt; Reviewer: pending
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COLLABORATORS ============ -->
+<section id="collaborators">
+  <div class="section-inner">
+    <p class="eyebrow">Strategic alliances</p>
+    <h2 class="section-title font-display">Collaborators</h2>
+    <p class="section-lede">Built alongside partners who each hold one piece of the trust chain — policy, ethics, and ground-level delivery.</p>
+    <div class="grid-3">
+      <div class="card glass-panel">
+        <div class="collab-avatar">MI</div>
+        <h3 style="margin-top:14px;">Mesa Institute</h3>
+        <p class="collab-role">Socio-Economic Impact &amp; Policy Brain</p>
+        <p>Turns verification data into policy-ready analysis — the bridge between what CarbonKrafft measures and what regulators need to see.</p>
+      </div>
+      <div class="card glass-panel">
+        <div class="collab-avatar">GB</div>
+        <h3 style="margin-top:14px;">Global Brand Ambassador</h3>
+        <p class="collab-role">Ethical Guardrails</p>
+        <p>Holds the line on responsible AI and transparency commitments as the platform scales across MSME clusters.</p>
+      </div>
+      <div class="card glass-panel">
+        <div class="collab-avatar">NY</div>
+        <h3 style="margin-top:14px;">NEXUS Youth Systems Lab</h3>
+        <p class="collab-role">On-Ground Implementation Cohort</p>
+        <p>Youth-led teams running first-mile onboarding — the people standing in front of an MSME owner with a scanner.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PARTNERSHIP / COMPLIANCE ============ -->
+<section id="partnership">
+  <div class="section-inner">
+    <p class="eyebrow">Partnership &amp; compliance</p>
+    <h2 class="section-title font-display">Built to be trusted before it's built to scale</h2>
+    <p class="section-lede">Every certificate CarbonKrafft issues traces back to a specific satellite pass and a specific OCR log — not a black box.</p>
+    <div class="chip-row">
+      <span class="chip glass-panel">GHG Protocol aligned</span>
+      <span class="chip glass-panel">ISO 14064 compatible</span>
+      <span class="chip glass-panel">DPDP Act — on-device edge processing</span>
+      <span class="chip glass-panel">EU-CBAM technical registry synced</span>
+      <span class="chip glass-panel">SEBI BRSR reporting ready</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CAREERS ============ -->
+<section id="careers">
+  <div class="section-inner">
+    <p class="eyebrow">Join the founding team</p>
+    <h2 class="section-title font-display">Careers</h2>
+    <p class="section-lede">Three roles, one mission: make emissions verification boring, reliable infrastructure for 69 million MSMEs.</p>
+    <div class="grid-3">
+      <div class="card glass-panel">
+        <p class="oracle-tag">Founding Engineer</p>
+        <h3 style="margin-top:10px;">Full-Stack / Mobile Developer</h3>
+        <p>Build the MSME-facing scan flow and the dashboards regulators actually open.</p>
+        <p class="mono" style="margin-top:12px;font-size:0.72rem;color:var(--brand-blue);">React Native · Flutter · Supabase</p>
+      </div>
+      <div class="card glass-panel">
+        <p class="oracle-tag">Founding Engineer</p>
+        <h3 style="margin-top:10px;">AI / Machine Learning Engineer</h3>
+        <p>Own the emissions-tracking models and the geospatial pipeline behind the Oracle.</p>
+        <p class="mono" style="margin-top:12px;font-size:0.72rem;color:var(--brand-blue);">PyTorch · Sklearn · Geospatial models</p>
+      </div>
+      <div class="card glass-panel">
+        <p class="oracle-tag">Founding Team</p>
+        <h3 style="margin-top:10px;">Content &amp; Community Manager</h3>
+        <p>Turn a compliance story into something MSME owners actually want to read.</p>
+        <p class="mono" style="margin-top:12px;font-size:0.72rem;color:var(--brand-blue);">LinkedIn · Substack · Storytelling</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ETHICS CHARTER ============ -->
+<section id="project">
+  <div class="section-inner">
+    <p class="eyebrow">Climate Ethics Charter</p>
+    <h2 class="section-title font-display">Six principles we don't negotiate on</h2>
+    <div class="ethics-grid">
+      <div class="card glass-panel"><p class="mono" style="color:var(--brand-blue);font-size:0.7rem;">01</p><h3 style="margin-top:8px;">Planet First</h3><p>Every product decision is weighed against actual emissions impact, not just user growth.</p></div>
+      <div class="card glass-panel"><p class="mono" style="color:var(--brand-blue);font-size:0.7rem;">02</p><h3 style="margin-top:8px;">Transparency by Design</h3><p>Every score traces back to a visible satellite pass and OCR log — no black-box numbers.</p></div>
+      <div class="card glass-panel"><p class="mono" style="color:var(--brand-blue);font-size:0.7rem;">03</p><h3 style="margin-top:8px;">Scientific Integrity</h3><p>Methodology follows GHG Protocol and ISO 14064, not whatever's convenient this quarter.</p></div>
+      <div class="card glass-panel"><p class="mono" style="color:var(--brand-blue);font-size:0.7rem;">04</p><h3 style="margin-top:8px;">Equity &amp; Accessibility</h3><p>Built for a bakery in Bengal as seriously as for an exporter with a compliance department.</p></div>
+      <div class="card glass-panel"><p class="mono" style="color:var(--brand-blue);font-size:0.7rem;">05</p><h3 style="margin-top:8px;">Responsible AI</h3><p>Agents flag uncertainty instead of guessing when the data doesn't add up.</p></div>
+      <div class="card glass-panel"><p class="mono" style="color:var(--brand-blue);font-size:0.7rem;">06</p><h3 style="margin-top:8px;">Accountability</h3><p>A human reviews every credit unlock above the automated threshold.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ JOIN CTA ============ -->
+<section id="join">
+  <div class="section-inner">
+    <div class="join-panel glass-panel-strong">
+      <p class="eyebrow">Join</p>
+      <h2 class="font-display">Enter the verification layer</h2>
+      <p>Whether you're an MSME, a policy partner, or a founding engineer — there's a place in the pipeline.</p>
+      <div class="join-ctas">
+        <a href="#oracle" class="glass-button-primary">Try the Oracle demo</a>
+        <a href="#careers" class="glass-button-secondary">See open roles</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-shell glass-panel-strong">
+    <div class="footer-grid">
+      <div>
+        <p class="eyebrow">Call to action</p>
+        <h2 class="font-display">Bring your emissions data into the verification layer</h2>
+        <p>The One-Scan Oracle is where an MSME can upload, review, and get scored cleanly from any device.</p>
+      </div>
+      <div class="footer-cta-buttons">
+        <a href="#oracle" class="glass-button-primary">Start the scan</a>
+        <a href="#project" class="glass-button-secondary">Review ethics charter</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>CarbonKrafft — Sovereign infrastructure for environmental governance</span>
+      <span class="dot"></span>
+      <span>Built for MSMEs navigating EU-CBAM</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // theme toggle
+  const track = document.getElementById('themeTrack');
+  const html = document.documentElement;
+  (function(){
+    try{
+      const saved = localStorage.getItem('ck-theme');
+      if(saved){ html.setAttribute('data-theme', saved); }
+    }catch(e){}
+  })();
+  track.addEventListener('click', ()=>{
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    try{ localStorage.setItem('ck-theme', next); }catch(e){}
+  });
+
+  // scroll reveal
+  const revealEls = document.querySelectorAll('section .card, section .stat-card, .hero-stat, .join-panel, .footer-shell');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); } });
+  },{threshold:0.12});
+  revealEls.forEach(el=>{ el.classList.add('reveal'); io.observe(el); });
+
+  // agent squad tabs
+  document.querySelectorAll('.squad-tab').forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      document.querySelectorAll('.squad-tab').forEach(t=>t.classList.remove('active'));
+      document.querySelectorAll('.squad-dept').forEach(d=>d.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelector(`.squad-dept[data-dept="${tab.dataset.dept}"]`).classList.add('active');
+    });
+  });
+
+  // oracle demo
+  const uploadBox = document.getElementById('uploadBox');
+  const ocrLog = document.getElementById('ocrLog');
+  const scoreNum = document.getElementById('scoreNum');
+  const revealBtn = document.getElementById('revealBtn');
+  const certLink = document.getElementById('certLink');
+  const ocrLines = [
+    '$ reading document via Bhashini AI…',
+    'Meter ID &nbsp;&nbsp;: WB-24-771930',
+    'Billing Cycle: Jun 01, 2026 – Jun 30, 2026',
+    'Units Consumed: 4,120 kWh',
+    '✓ extraction complete'
+  ];
+  let scanned = false;
+  uploadBox.addEventListener('click', ()=>{
+    if(scanned) return;
+    scanned = true;
+    uploadBox.textContent = '✓ Document received — processing…';
+    ocrLog.innerHTML = '';
+    ocrLines.forEach((line,i)=>{
+      setTimeout(()=>{
+        const div = document.createElement('div');
+        div.innerHTML = line;
+        ocrLog.appendChild(div);
+      }, i*550);
+    });
+    setTimeout(()=>{
+      let n=0; const target=78;
+      const tick=setInterval(()=>{
+        n+=3;
+        if(n>=target){ n=target; clearInterval(tick); revealBtn.classList.add('show'); certLink.textContent='view certificate →'; certLink.href='#'; }
+        scoreNum.textContent=n;
+      },30);
+    }, ocrLines.length*550+300);
+  });
+</script>
+
+</body>
+</html>
